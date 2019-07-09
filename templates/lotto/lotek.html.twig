@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Lotek{% endblock %}
+
+{% block body %}
+
+    {% for numer in tab %}
+
+       {{ loop.index }}. Wylosowany numer to {{ numer }} <br>
+
+    {% endfor %}
+
+{% endblock %}

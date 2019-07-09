@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+
+
+    <div class="row">
+    {% for user in list %}
+
+        <div class="col-sm-4">
+            {{ loop.index }}.  {{ user }}:    {{ user.description }} <br>
+        </div>
+
+    {% endfor %}
+    </div>
+{% endblock %}
