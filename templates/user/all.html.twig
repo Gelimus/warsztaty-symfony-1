@@ -2,13 +2,11 @@
 
 {% block body %}
 
-
-
     <div class="row">
     {% for user in list %}
 
         <div class="col-sm-4">
-            {{ loop.index }}.  {{ user }}:    {{ user.description }} <br>
+            <a href="{{ path('showUser', { 'id': user.id }) }}" ><button type="button" class="btn btn-outline-info btn-block"  >{{ loop.index }}. {{ user }}:    {{ user.description }} <br> </button> </a>
         </div>
 
     {% endfor %}

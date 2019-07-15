@@ -67,4 +67,75 @@ class UserController extends AbstractController
             'list' => $list,
         ]);
     }
+
+    /**
+     * @Route("/user/{id}",name="showUser")
+     */
+    public function showSingle($id)
+    {
+        $active = $this->getDoctrine()
+            ->getRepository(User::class)
+            ->find($id);
+
+        return $this->render('user/preview.html.twig', [
+            'user' => $active,
+        ]);
+    }
+
+    /**
+     * @Route("/user/{id}/delete",name="deleteUser")
+     */
+    public function deleteUser($id)
+    {
+        $user = $this->getDoctrine()
+            ->getRepository(User::class)
+            ->find($id);
+
+        if(sizeof($user->getArticles())==0){
+            $this->getDoctrine()
+                ->getManager()
+                ->remove($user);
+            $this->getDoctrine()->getManagerForClass(User::class)
+                ->flush();
+            return $this->render('user/success.html.twig');
+        }else{
+            return $this->render('user/unsuccessful.html.twig');
+        }
+
+    }
+    /**
+     * @Route("/user/{id}/update",name="updateUser")
+     */
+    public function update($id, Request $request)
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $user = $entityManager->getRepository(User::class)->find($id);
+
+        $form = $this->createFormBuilder($user)
+            ->add('name', TextType::class)
+            ->add('description', TextType::class)
+            ->add('save', SubmitType::class, ['label' => 'Update User'])
+            ->getForm();
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            // $form->getData() holds the submitted values
+            // but, the original `$task` variable has also been updated
+            $user = $form->getData();
+
+            // ... perform some action, such as saving the task to the database
+            // for example, if Task is a Doctrine entity, save it!
+            $entityManager->flush();
+
+            return $this->render('user/success.html.twig');
+        }
+
+        $entityManager->flush();
+
+        return $this->render('user/new.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+
 }

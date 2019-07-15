@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<h1>{{ user }}</h1>
+    {{ user.description }}
+
+    <div class="row">
+            <div class="col-sm-1.5">
+                <a href="{{ path('updateUser', { 'id': user.id }) }}" ><button type="button" class="btn btn-outline-info btn-block"  >Edit User <br> </button></a>
+            </div>
+        <div class="col-sm-1.5">
+            <a href="{{ path('deleteUser', { 'id': user.id }) }}" ><button type="button" class="btn btn-outline-info btn-block " >Delete User <br> </button></a>
+        </div>
+
+    </div>
+{% endblock %}
