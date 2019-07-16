@@ -8,6 +8,7 @@ use Symfony\Component\Config\Resource\FileResource;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Kernel as BaseKernel;
 use Symfony\Component\Routing\RouteCollectionBuilder;
+use FOS;
 
 class Kernel extends BaseKernel
 {
@@ -23,6 +24,7 @@ class Kernel extends BaseKernel
                 yield new $class();
             }
         }
+        $bundles = array( new FOS\UserBundle\FOSUserBundle(),);
     }
 
     public function getProjectDir(): string
